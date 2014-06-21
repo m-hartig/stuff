@@ -1,3 +1,3 @@
-My stuff
+Stuff
 ========
-These are little scripts for practising.
+...
