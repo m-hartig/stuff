@@ -29,8 +29,8 @@ def kuerzen(bruch):
 
 
 def main():
-    """Hauptfunktion"""
-    a, b = "2/4", "8/5"
+    a = raw_input("> ")
+    b = raw_input("> ")
     a, b = bruch_aufbereiten(a), bruch_aufbereiten(b)
 
     if a[-1] != b[-1]:
