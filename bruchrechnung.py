@@ -1,6 +1,6 @@
 
 def bruch_aufbereiten(bruch):
-    """Bruch wird in Zaehler und Nenner geteilt"""
+    """Bruch wird am Bruchstrich in Zaehler und Nenner geteilt"""
     strich = bruch.index("/")
     zaehler = bruch[:strich]
     nenner = bruch[strich + 1:]
