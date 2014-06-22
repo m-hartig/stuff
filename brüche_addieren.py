@@ -36,11 +36,10 @@ def main():
     if a[-1] != b[-1]:
         a, b = nenner_angleichen(a, b)
 
-    summe = [a[0] + b[0], a[-1]]
-
-    print "Summe:\t\t", summe
-    print "Gekuerzt:\t", kuerzen(summe)
-
+    print "Summe:\t\t", kuerzen([a[0] + b[0], a[-1]])
+    print "Diffenrenz:\t", kuerzen([a[0] - b[0], a[-1]])
+    print "Produkt:\t", kuerzen([a[0] * b[0], a[-1] * a[-1]])
+    print "Quotient:\t", kuerzen([a[0] * b[-1], a[-1] * b[0]])
 
 if __name__ == '__main__':
     main()
