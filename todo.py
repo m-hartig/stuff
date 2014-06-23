@@ -21,7 +21,8 @@ def neue_aufgabe():
 
 def ausgabe_der_aufgaben(aufgaben):
     """Darstellung der Aufgaben"""
-    print aufgaben.viewitems()
+    for key, value in sorted(aufgaben.iteritems(), key=lambda kvt: kvt[1][-1]):
+        print key, ":", value
 
 
 def main():
