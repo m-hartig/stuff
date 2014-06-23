@@ -47,6 +47,7 @@ if __name__ == '__main__':
 # Was noch fehlt
 # ======
 # Verhalten, wenn Datei leer
+# with Statement
 # Countdown gilt nur fuer Erstellungstag
 # Sortieren nach noch verbleibender Zeit
 # Aufgabe mit Erinnerung durch OSX verbinden
