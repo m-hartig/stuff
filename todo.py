@@ -1,13 +1,12 @@
-from datetime import datetime, date
+from datetime import datetime
 from json import load, dump
 
 
 def datum_auswerten(datum):
     """Zeit bis zur Aufgabe wird ermittelt"""
-    tag, monat, jahr = int(datum[:datum.index(".")]), int(
-        datum[datum.index(".") + 1:-5]), int(datum[-4:])
-    datum = date(jahr, monat, tag)
-    return [datum, int(str(datum - date.today())[0])]
+    datum = map(int, datum.split("."))
+    datum = datetime(datum[2], datum[1], datum[0])
+    return [datum, (datum - datetime.now()).days]
 
 
 def neue_aufgabe():
@@ -22,8 +21,7 @@ def neue_aufgabe():
 
 def ausgabe_der_aufgaben(aufgaben):
     """Darstellung der Aufgaben"""
-    for key in sorted(aufgaben.iterkeys()):
-        print "%s: %s" % (key, aufgaben[key][-1])
+    print aufgaben.viewitems()
 
 
 def main():
@@ -48,6 +46,7 @@ if __name__ == '__main__':
 # Was noch fehlt
 # ======
 # Verhalten, wenn Datei leer
+# Countdown gilt nur fuer Erstellungstag
 # Sortieren nach noch verbleibender Zeit
 # Aufgabe mit Erinnerung durch OSX verbinden
 # Online Zugang
