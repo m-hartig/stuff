@@ -22,8 +22,8 @@ def neue_aufgabe():
 
 def ausgabe_der_aufgaben(aufgaben):
     """Darstellung der Aufgaben"""
-    for key in aufgaben.keys():
-        print key, aufgaben[key]
+    for key in sorted(aufgaben.iterkeys()):
+        print "%s: %s" % (key, aufgaben[key][-1])
 
 
 def main():
