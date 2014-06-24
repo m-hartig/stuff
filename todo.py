@@ -4,8 +4,12 @@ from json import load, dump
 
 def datum_auswerten(datum):
     """Zeit bis zur Aufgabe wird ermittelt"""
-    datum = map(int, datum.split("."))
-    datum = datetime(datum[2], datum[1], datum[0])
+    if "." in datum:
+        datum = map(int, datum.split("."))
+        datum = datetime(datum[2], datum[1], datum[0])
+    else:
+        datum = map(int, datum.split("-"))
+        datum = datetime(datum[0], datum[1], datum[2])
     return datum
 
 
@@ -21,7 +25,12 @@ def neue_aufgabe():
 def ausgabe_der_aufgaben(aufgaben):
     """Darstellung der Aufgaben"""
     for key, value in sorted(aufgaben.iteritems(), key=lambda kvt: kvt[1][-1]):
-        print key, ":", value
+        countdown = (datum_auswerten(value[0][:10]) - datetime.now()).days + 1
+        value[0] = value[0][:10]
+        print "%s - noch %d Tag(e)" % (key, countdown)
+        for eintrag in value:
+            print eintrag
+        print
 
 
 def main():
@@ -46,6 +55,7 @@ if __name__ == '__main__':
 # Was noch fehlt
 # ======
 # Verhalten, wenn Datei leer
+# datum - datetime.now()).days
 # with Statement
 # Countdown gilt nur fuer Erstellungstag -> IN Ansicht einbauen
 # Sortieren nach noch verbleibender Zeit
