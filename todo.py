@@ -2,6 +2,18 @@ from datetime import datetime
 from json import load, dump
 
 
+def abkuerzung(fach):
+    faecher = {"D": "Deutsch",
+               "Ma": "Mathematik",
+               "Ru": "Russisch",
+               "Eng": "Englisch"}
+
+    if fach in faecher:
+        return faecher[fach]
+    else:
+        return fach
+
+
 def datum_auswerten(datum):
     """Zeit bis zur Aufgabe wird ermittelt"""
     if "." in datum:
@@ -15,11 +27,12 @@ def datum_auswerten(datum):
 
 def neue_aufgabe():
     """Eingabe einer neuen Aufgabe"""
+    print
     fach = raw_input("Fach: ")
     datum = raw_input("Datum: ")
     thema = raw_input("Thema: ")
     note = bool(raw_input("Note? "))
-    return {fach: [str(datum_auswerten(datum)), thema, note]}
+    return {abkuerzung(fach): [str(datum_auswerten(datum)), thema, note]}
 
 
 def ausgabe_der_aufgaben(aufgaben):
@@ -40,11 +53,13 @@ def main():
     while True:
         ausgabe_der_aufgaben(aufgaben)
 
+        print "Neue Aufgabe anlegen?"
         auswahl = raw_input("> ").lower()
 
-        if "neu" in auswahl:
+        if "ja" in auswahl:
             aufgaben.update(neue_aufgabe())
             dump(aufgaben, open("aufgaben.txt", "w"))
+            print
         else:
             break
 
