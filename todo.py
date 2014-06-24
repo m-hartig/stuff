@@ -4,10 +4,9 @@ from sys import argv
 
 
 def abkuerzung(fach):
-    faecher = {"D": "Deutsch",
-               "Ma": "Mathematik",
-               "Ru": "Russisch",
-               "Eng": "Englisch"}
+    """Zuordnung der Faecher zu den Abkuerzungen"""
+    faecher = {"D": "Deutsch", "Ma": "Mathematik",
+               "Ru": "Russisch", "Eng": "Englisch"}
 
     if fach in faecher:
         return faecher[fach]
@@ -17,9 +16,11 @@ def abkuerzung(fach):
 
 def datum_auswerten(datum):
     """Zeit bis zur Aufgabe wird ermittelt"""
+    # Deutsches Datum
     if "." in datum:
         datum = map(int, datum.split("."))
         datum = datetime(datum[2], datum[1], datum[0])
+    # Amerikanisches Datum
     else:
         datum = map(int, datum.split("-"))
         datum = datetime(datum[0], datum[1], datum[2])
@@ -39,7 +40,9 @@ def neue_aufgabe():
 def ausgabe_der_aufgaben(aufgaben):
     """Darstellung der Aufgaben"""
     for key, value in sorted(aufgaben.iteritems()):
+        # countdown = Tage von heute bis zum Datum
         countdown = (datum_auswerten(value[0][:10]) - datetime.now()).days + 1
+        # 00:00:00 entfernen
         value[0] = value[0][:10]
         print "%s - noch %d Tag(e)" % (key, countdown)
         for eintrag in value:
@@ -48,6 +51,7 @@ def ausgabe_der_aufgaben(aufgaben):
 
 
 def schnell_aufgabe_erstellen(datum, fach, thema, aufgaben):
+    """Schnelles Erstellen einer Aufgabe via Terminal"""
     aufgaben.update(
         {abkuerzung(fach): [str(datum_auswerten(datum)), thema, False]})
 
@@ -57,6 +61,7 @@ def main():
     aufgaben = load(open("aufgaben.txt"))
 
     if argv[1:]:
+        # Wenn Paramter uebergeben wurden
         script, datum, fach, thema = argv
         schnell_aufgabe_erstellen(datum, fach, thema, aufgaben)
         dump(aufgaben, open("aufgaben.txt", "w"))
