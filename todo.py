@@ -16,12 +16,12 @@ def abkuerzung(fach):
 
 def datum_auswerten(datum):
     """Zeit bis zur Aufgabe wird ermittelt"""
-    # Deutsches Datum
     if "." in datum:
+        # Deutsches Datum
         datum = map(int, datum.split("."))
         datum = datetime(datum[2], datum[1], datum[0])
-    # Amerikanisches Datum
     else:
+        # Amerikanisches Datum
         datum = map(int, datum.split("-"))
         datum = datetime(datum[0], datum[1], datum[2])
     return datum
@@ -29,7 +29,6 @@ def datum_auswerten(datum):
 
 def neue_aufgabe():
     """Eingabe einer neuen Aufgabe"""
-    print
     fach = raw_input("Fach: ")
     datum = raw_input("Datum: ")
     thema = raw_input("Thema: ")
@@ -39,15 +38,17 @@ def neue_aufgabe():
 
 def ausgabe_der_aufgaben(aufgaben):
     """Darstellung der Aufgaben"""
+    print
     for key, value in sorted(aufgaben.iteritems()):
         # countdown = Tage von heute bis zum Datum
         countdown = (datum_auswerten(value[0][:10]) - datetime.now()).days + 1
         # 00:00:00 entfernen
         value[0] = value[0][:10]
+
         print "%s - noch %d Tag(e)" % (key, countdown)
         for eintrag in value:
             print eintrag
-        print
+    print
 
 
 def schnell_aufgabe_erstellen(datum, fach, thema, aufgaben):
