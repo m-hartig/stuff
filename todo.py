@@ -6,17 +6,16 @@ def datum_auswerten(datum):
     """Zeit bis zur Aufgabe wird ermittelt"""
     datum = map(int, datum.split("."))
     datum = datetime(datum[2], datum[1], datum[0])
-    return [datum, (datum - datetime.now()).days]
+    return datum
 
 
 def neue_aufgabe():
     """Eingabe einer neuen Aufgabe"""
     fach = raw_input("Fach: ")
     datum = raw_input("Datum: ")
-    datum, countdown = datum_auswerten(datum)
     thema = raw_input("Thema: ")
     note = bool(raw_input("Note? "))
-    return {fach: [str(datum), thema, note, countdown]}
+    return {fach: [str(datum_auswerten(datum)), thema, note]}
 
 
 def ausgabe_der_aufgaben(aufgaben):
