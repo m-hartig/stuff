@@ -1,5 +1,6 @@
 from datetime import datetime
 from json import load, dump
+from sys import argv
 
 
 def abkuerzung(fach):
@@ -37,7 +38,7 @@ def neue_aufgabe():
 
 def ausgabe_der_aufgaben(aufgaben):
     """Darstellung der Aufgaben"""
-    for key, value in sorted(aufgaben.iteritems(), key=lambda kvt: kvt[1][-1]):
+    for key, value in sorted(aufgaben.iteritems()):
         countdown = (datum_auswerten(value[0][:10]) - datetime.now()).days + 1
         value[0] = value[0][:10]
         print "%s - noch %d Tag(e)" % (key, countdown)
@@ -46,9 +47,20 @@ def ausgabe_der_aufgaben(aufgaben):
         print
 
 
+def schnell_aufgabe_erstellen(datum, fach, thema, aufgaben):
+    aufgaben.update(
+        {abkuerzung(fach): [str(datum_auswerten(datum)), thema, False]})
+
+
 def main():
     """Hauptfunktion"""
     aufgaben = load(open("aufgaben.txt"))
+
+    if argv[1:]:
+        script, datum, fach, thema = argv
+        schnell_aufgabe_erstellen(datum, fach, thema, aufgaben)
+        dump(aufgaben, open("aufgaben.txt", "w"))
+        exit()
 
     while True:
         ausgabe_der_aufgaben(aufgaben)
@@ -70,9 +82,7 @@ if __name__ == '__main__':
 # Was noch fehlt
 # ======
 # Verhalten, wenn Datei leer
-# datum - datetime.now()).days
 # with Statement
-# Countdown gilt nur fuer Erstellungstag -> IN Ansicht einbauen
 # Sortieren nach noch verbleibender Zeit
 # Aufgabe mit Erinnerung durch OSX verbinden
 # Online Zugang
