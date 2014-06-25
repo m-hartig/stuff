@@ -1,1 +1,1 @@
-{"Eng ": ["2014-06-27 00:00:00", "Aufgaben", true], "Englisch": ["2014-06-27", "LK", true], "Informatik": ["2014-06-25", "OOP", true], "Deutsch": ["2014-06-25 00:00:00", "Thema", false]}
+{"Eng ": ["2014-06-27", "Aufgaben", true], "Englisch": ["2014-06-27", "LK", true], "Deutsch": ["2014-06-25", "Thema", false]}

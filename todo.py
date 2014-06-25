@@ -3,6 +3,21 @@ from json import load, dump
 from sys import argv
 
 
+def schnell_aufgabe_erstellen(datum, fach, thema, aufgaben):
+    """Schnelles Erstellen einer Aufgabe via Terminal"""
+    aufgaben.update(
+        {abkuerzung(fach): [str(datum_auswerten(datum)), thema, False]})
+
+
+def neue_aufgabe():
+    """Eingabe einer neuen Aufgabe"""
+    fach = raw_input("Fach: ")
+    datum = raw_input("Datum: ")
+    thema = raw_input("Thema: ")
+    note = bool(raw_input("Note? "))
+    return {abkuerzung(fach): [str(datum_auswerten(datum)), thema, note]}
+
+
 def abkuerzung(fach):
     """Zuordnung der Faecher zu den Abkuerzungen"""
     faecher = {"D": "Deutsch", "Ma": "Mathematik",
@@ -15,7 +30,7 @@ def abkuerzung(fach):
 
 
 def datum_auswerten(datum):
-    """Zeit bis zur Aufgabe wird ermittelt"""
+    """Verbleibende Zeit bis zur Aufgabe wird ermittelt"""
     if "." in datum:
         # Deutsches Datum
         datum = map(int, datum.split("."))
@@ -27,17 +42,14 @@ def datum_auswerten(datum):
     return datum
 
 
-def neue_aufgabe():
-    """Eingabe einer neuen Aufgabe"""
-    fach = raw_input("Fach: ")
-    datum = raw_input("Datum: ")
-    thema = raw_input("Thema: ")
-    note = bool(raw_input("Note? "))
-    return {abkuerzung(fach): [str(datum_auswerten(datum)), thema, note]}
+def aufgabe_entfernen(aufgaben, fach):
+    """Entfernen einer bestehenden Aufgabe"""
+    del aufgaben[fach]
+    return aufgaben
 
 
 def ausgabe_der_aufgaben(aufgaben):
-    """Darstellung der Aufgaben"""
+    """Ausgabe aller Aufgaben"""
     print
     for key, value in sorted(aufgaben.iteritems()):
         # countdown = Tage von heute bis zum Datum
@@ -48,18 +60,15 @@ def ausgabe_der_aufgaben(aufgaben):
         print "%s - noch %d Tag(e)" % (key, countdown)
         for eintrag in value:
             print eintrag
+        print
     print
 
 
-def schnell_aufgabe_erstellen(datum, fach, thema, aufgaben):
-    """Schnelles Erstellen einer Aufgabe via Terminal"""
-    aufgaben.update(
-        {abkuerzung(fach): [str(datum_auswerten(datum)), thema, False]})
-
-
 def main():
-    """Hauptfunktion"""
-    aufgaben = load(open("aufgaben.txt"))
+    try:
+        aufgaben = load(open("aufgaben.txt"))
+    except:
+        aufgaben = dump("{}", open("aufgaben.txt", "w"))
 
     if argv[1:]:
         # Wenn Paramter uebergeben wurden
@@ -71,12 +80,16 @@ def main():
     while True:
         ausgabe_der_aufgaben(aufgaben)
 
-        print "Neue Aufgabe anlegen?"
+        print "Neue Aufgabe anlegen oder Aufgabe entfernen?"
         auswahl = raw_input("> ").lower()
 
-        if "ja" in auswahl:
+        if "neu" in auswahl:
             aufgaben.update(neue_aufgabe())
             dump(aufgaben, open("aufgaben.txt", "w"))
+            print
+        elif "entf" in auswahl:
+            fach = raw_input("Welches Fach: ")
+            dump(aufgabe_entfernen(aufgaben, fach), open("aufgaben.txt", "w"))
             print
         else:
             break
