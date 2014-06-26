@@ -35,10 +35,8 @@ def abkuerzung_expandieren(fach):
 def datum_auswerten(datum):
     """Datum wird zur Weiterverabeitung bearbeitet"""
     try:
-        # Deutsches Datum
         tag, monat, jahr = map(int, datum.split("."))
     except:
-        # Internationales Datum
         jahr, monat, tag = map(int, datum.split("-"))
 
     return datetime(jahr, monat, tag)
@@ -75,10 +73,12 @@ def main():
                 AUFGABEN.update(neue_aufgabe())
                 dump(AUFGABEN, open("aufgaben.txt", "w"))
                 print
+
             elif "entf" in auswahl:
                 fach = raw_input("Welches Fach: ")
                 dump(aufgabe_entfernen(fach), open("aufgaben.txt", "w"))
                 print
+
             else:
                 break
 
