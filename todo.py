@@ -64,24 +64,23 @@ def main():
         script, datum, fach, thema = argv
         schnell_aufgabe_erstellen(datum, fach, thema)
         dump(AUFGABEN, open("aufgaben.txt", "w"))
-        exit()
+    else:
+        while True:
+            ausgabe_der_aufgaben()
 
-    while True:
-        ausgabe_der_aufgaben()
+            print "Neue Aufgabe anlegen oder Aufgabe entfernen?"
+            auswahl = raw_input("> ").lower()
 
-        print "Neue Aufgabe anlegen oder Aufgabe entfernen?"
-        auswahl = raw_input("> ").lower()
-
-        if "neu" in auswahl:
-            AUFGABEN.update(neue_aufgabe())
-            dump(AUFGABEN, open("aufgaben.txt", "w"))
-            print
-        elif "entf" in auswahl:
-            fach = raw_input("Welches Fach: ")
-            dump(aufgabe_entfernen(fach), open("aufgaben.txt", "w"))
-            print
-        else:
-            break
+            if "neu" in auswahl:
+                AUFGABEN.update(neue_aufgabe())
+                dump(AUFGABEN, open("aufgaben.txt", "w"))
+                print
+            elif "entf" in auswahl:
+                fach = raw_input("Welches Fach: ")
+                dump(aufgabe_entfernen(fach), open("aufgaben.txt", "w"))
+                print
+            else:
+                break
 
 
 if __name__ == '__main__':
@@ -92,4 +91,4 @@ if __name__ == '__main__':
 # Aufgabe-Entfernen Funktion kaputt (alles wird geloescht)
 # Verhalten, wenn Datei leer
 # with Statement
-# Sortieren nach noch verbleibender Zeit
+# Sortieren nach noch verbleibender Zeit + Note
