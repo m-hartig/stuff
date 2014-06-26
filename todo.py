@@ -19,6 +19,7 @@ def neue_aufgabe():
     datum = raw_input("Datum: ")
     thema = raw_input("Thema: ")
     note = bool(raw_input("Note? "))
+
     return {abkuerzung_expandieren(fach): [str(datum_auswerten(datum)), thema, note]}
 
 
@@ -35,8 +36,10 @@ def abkuerzung_expandieren(fach):
 def datum_auswerten(datum):
     """Datum wird zur Weiterverabeitung bearbeitet"""
     try:
+        # Deutsches Datum
         tag, monat, jahr = map(int, datum.split("."))
     except:
+        # Internationales Datum
         jahr, monat, tag = map(int, datum.split("-"))
 
     return datetime(jahr, monat, tag)
@@ -44,6 +47,7 @@ def datum_auswerten(datum):
 
 def countdown_berechnen(datum):
     """Berechnen der noch verbleibenden Zeit"""
+    # Addieren mit 1, da heutiger Tag mitgerechnet werden soll
     return (datum_auswerten(datum) - datetime.now()).days + 1
 
 
@@ -58,6 +62,7 @@ def ausgabe_der_aufgaben():
 
 def main():
     """Hauptfunktion"""
+
     if argv[1:]:
         script, datum, fach, thema = argv
         schnell_aufgabe_erstellen(datum, fach, thema)
