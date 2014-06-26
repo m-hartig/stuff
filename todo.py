@@ -2,6 +2,9 @@ from datetime import datetime
 from json import load, dump
 from sys import argv
 
+ABKUERZUNG_ZU_FACH = {"D": "Deutsch", "Ma": "Mathematik",
+                      "Ru": "Russisch", "Eng": "Englisch"}
+
 
 def schnell_aufgabe_erstellen(datum, fach, thema, aufgaben):
     """Schnelles Erstellen einer Aufgabe via Terminal"""
@@ -18,25 +21,19 @@ def neue_aufgabe():
     return {abkuerzung(fach): [str(datum_auswerten(datum)), thema, note]}
 
 
-def abkuerzung(fach):
-    """Zuordnung der Faecher zu den Abkuerzungen"""
-    faecher = {"D": "Deutsch", "Ma": "Mathematik",
-               "Ru": "Russisch", "Eng": "Englisch"}
-
-    if fach in faecher:
-        return faecher[fach]
-    else:
-        return fach
+def abkuerzung_expandieren(fach):
+    """Zuordnung der Abkuerzungen zu den Faechern"""
+    return ABKUERZUNG_ZU_FACH.get(fach, fach)
 
 
 def datum_auswerten(datum):
-    """Verbleibende Zeit bis zur Aufgabe wird ermittelt"""
+    """Datum wird zur Weiterverabeitung bearbeitet"""
     if "." in datum:
         # Deutsches Datum
         datum = map(int, datum.split("."))
         datum = datetime(datum[2], datum[1], datum[0])
     else:
-        # Amerikanisches Datum
+        # Internationales Datum
         datum = map(int, datum.split("-"))
         datum = datetime(datum[0], datum[1], datum[2])
     return datum
@@ -45,7 +42,6 @@ def datum_auswerten(datum):
 def aufgabe_entfernen(aufgaben, fach):
     """Entfernen einer bestehenden Aufgabe"""
     del aufgaben[fach]
-    return aufgaben
 
 
 def ausgabe_der_aufgaben(aufgaben):
@@ -65,10 +61,7 @@ def ausgabe_der_aufgaben(aufgaben):
 
 
 def main():
-    try:
-        aufgaben = load(open("aufgaben.txt"))
-    except:
-        aufgaben = dump("{}", open("aufgaben.txt", "w"))
+    aufgaben = load(open("aufgaben.txt"))
 
     if argv[1:]:
         # Wenn Paramter uebergeben wurden
