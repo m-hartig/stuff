@@ -81,7 +81,8 @@ def main():
 
             elif "entf" in auswahl:
                 fach = raw_input("Welches Fach: ")
-                dump(aufgabe_entfernen(fach), open("aufgaben.txt", "w"))
+                aufgabe_entfernen(fach)
+                dump(AUFGABEN, open("aufgaben.txt", "w"))
                 print
 
             else:
@@ -93,7 +94,6 @@ if __name__ == '__main__':
 
 # Was noch fehlt
 # ======
-# Aufgabe-Entfernen Funktion kaputt (alles wird geloescht)
 # Verhalten, wenn Datei leer
 # with Statement
 # Sortieren nach noch verbleibender Zeit + Note
