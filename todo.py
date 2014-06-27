@@ -46,7 +46,7 @@ def datum_auswerten(datum):
         # Internationales Datum
         jahr, monat, tag = map(int, datum.split("-"))
 
-    return datetime.date(jahr, monat, tag)
+    return datetime(jahr, monat, tag)
 
 
 def countdown_berechnen(datum):
@@ -78,16 +78,14 @@ def main():
             print "Neue Aufgabe anlegen oder Aufgabe entfernen?"
             auswahl = raw_input("> ").lower()
 
-            if "neu" in auswahl:
+            if "neu" in auswahl or "neue" in auswahl:
                 AUFGABEN.update(neue_aufgabe())
                 dump(AUFGABEN, open("aufgaben.txt", "w"))
-                print
 
-            elif "entf" in auswahl:
+            elif "entf" in auswahl or "del" in auswahl:
                 fach = raw_input("Welches Fach: ")
                 aufgabe_entfernen(fach)
                 dump(AUFGABEN, open("aufgaben.txt", "w"))
-                print
 
             else:
                 break
