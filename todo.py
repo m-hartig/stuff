@@ -5,22 +5,12 @@ from sys import argv, exit
 ABKUERZUNG_ZU_FACH = {"D": "Deutsch", "Ma": "Mathematik",
                       "Ru": "Russisch", "Eng": "Englisch"}
 
-try:
-    with open("aufgaben.txt") as aufgaben_datei:
-        AUFGABEN = load(aufgaben_datei)
-
-except:
-    # Wenn die Datei leer ist ...
-    with open("aufgaben.txt", "w") as aufgaben_datei:
-        # ... soll ein leeres Dict eingefuegt werden
-        dump(dict(), aufgaben_datei)
-        AUFGABEN = load(aufgaben_datei)
-
 
 def schnell_aufgabe_erstellen(fach, thema):
     """Schnelles Erstellen einer Aufgabe via Terminal"""
-    AUFGABEN[abkz_expandieren(fach)] = [
+    AUFGABEN[abkz_expand(fach)] = [
         str(datetime.today() + timedelta(days=1)), thema, False]
+    print "Aufgabe wurde erstellt."
 
 
 def neue_aufgabe():
@@ -30,17 +20,16 @@ def neue_aufgabe():
     thema = raw_input("Thema: ")
     note = bool(raw_input("Note? "))
 
-    AUFGABEN[abkz_expandieren(fach)] = [
-        str(datum_auswerten(datum)), thema, note]
+    AUFGABEN[abkz_expand(fach)] = [str(datum_auswerten(datum)), thema, note]
 
 
 def aufgabe_entfernen():
     """Entfernen einer bestehenden Aufgabe"""
     fach = raw_input("Welches Fach: ")
-    del AUFGABEN[abkz_expandieren(fach)]
+    del AUFGABEN[abkz_expand(fach)]
 
 
-def abkz_expandieren(fach):
+def abkz_expand(fach):
     """Zuordnung der Abkuerzungen zu den Faechern"""
     return ABKUERZUNG_ZU_FACH.get(fach, fach)
 
@@ -48,10 +37,8 @@ def abkz_expandieren(fach):
 def datum_auswerten(datum):
     """Datum wird zur Weiterverabeitung bearbeitet"""
     try:
-        # Deutsches Datum
         tag, monat, jahr = map(int, datum.split("."))
     except:
-        # Internationales Datum
         jahr, monat, tag = map(int, datum.split("-"))
 
     return datetime(jahr, monat, tag)
@@ -72,7 +59,12 @@ def ausgabe_der_aufgaben():
         print
 
 
-def hauptmenue_ausgeben(menue):
+def programm_beenden():
+    print "Danke, dass du dieses Programm genutzt hast!"
+    exit()
+
+
+def programm_steuern(menue):
     while True:
         print "=== Aufgabenverwaltung ==="
         for index, item in enumerate(menue, 1):
@@ -86,39 +78,32 @@ def hauptmenue_ausgeben(menue):
             print "Nur Zahlen im Bereich 1 - {} eingeben".format(len(menue))
 
 
-def programm_beenden():
-    print "Danke, dass du dieses Programm genutzt hast!"
-    exit()
+menue = [
+    ["Alle Aufgaben anzeigen", ausgabe_der_aufgaben],
+    ["Neue Aufgabe anlegen", neue_aufgabe],
+    ["Aufgabe entfernen", aufgabe_entfernen],
+    ["Programm beenden", programm_beenden]
+]
 
-
-def main():
-    """Hauptfunktion"""
-    menue = [
-        ["Alle Aufgaben anzeigen", ausgabe_der_aufgaben],
-        ["Neue Aufgabe anlegen", neue_aufgabe],
-        ["Aufgabe entfernen", aufgabe_entfernen],
-        ["Programm beenden", programm_beenden]
-    ]
+with open("aufgaben.txt") as aufgaben_datei:
+    try:
+        AUFGABEN = load(aufgaben_datei)
+    except:
+        AUFGABEN = dict()
 
     if argv[1:]:
         script, fach, thema = argv
         schnell_aufgabe_erstellen(fach, thema)
-        with open("aufgaben.txt") as aufgaben_datei:
-            dump(AUFGABEN, aufgaben_datei, "w")
+        dump(AUFGABEN, aufgaben_datei, "w")
     else:
-        hauptmenue_ausgeben(menue)
-        with open("aufgaben.txt") as aufgaben_datei:
-            AUFGABEN = load(aufgaben_datei)
-            dump(AUFGABEN, aufgaben_datei, "w")
+        programm_steuern(menue)
+        dump(AUFGABEN, aufgaben_datei, "w")
 
-
-if __name__ == '__main__':
-    main()
 
 
 
 # Was noch fehlt/zu tun ist
 # ======
-# FileError stimmt nicht
+# Excpet in datum_auswerten praezisieren
 # Schnellaufgabe funktioniert nicht
 # Sortieren nach noch verbleibender Zeit + Note
