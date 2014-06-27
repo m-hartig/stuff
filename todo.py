@@ -90,6 +90,8 @@ def main():
             else:
                 break
 
+    AUFGABEN.close()
+
 
 if __name__ == '__main__':
     main()
