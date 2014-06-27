@@ -63,7 +63,6 @@ def ausgabe_der_aufgaben():
 def programm_beenden():
     """Beenden des Programmes"""
     print "Danke, dass du dieses Programm genutzt hast!"
-    exit()
 
 
 def programm_steuern(menue):
@@ -72,9 +71,13 @@ def programm_steuern(menue):
         print "=== Aufgabenverwaltung ==="
         for index, item in enumerate(menue, 1):
             print "{}  {}".format(index, item[0])
-        auswahl = input("> ") - 1
-        print
 
+        auswahl = raw_input("> ")
+        if "end" in auswahl:
+            break
+
+        print
+        auswahl = int(auswahl) - 1
         if 0 <= auswahl < len(menue):
             menue[auswahl][1]()
         else:
@@ -88,7 +91,7 @@ menue = [
     ["Programm beenden", programm_beenden]
 ]
 
-with open("aufgaben.txt") as aufgaben_datei:
+with open("aufgaben.txt", "w") as aufgaben_datei:
     try:
         AUFGABEN = load(aufgaben_datei)
     except:
@@ -100,9 +103,7 @@ with open("aufgaben.txt") as aufgaben_datei:
         dump(AUFGABEN, aufgaben_datei, "w")
     else:
         programm_steuern(menue)
-        dump(AUFGABEN, aufgaben_datei, "w")
-
-
+        dump(AUFGABEN, aufgaben_datei)
 
 
 # Was noch fehlt/zu tun ist
