@@ -2,9 +2,6 @@ from datetime import datetime, timedelta
 from json import load, dump
 from sys import argv, exit
 
-ABKUERZUNG_ZU_FACH = {"D": "Deutsch", "Ma": "Mathematik",
-                      "Ru": "Russisch", "Eng": "Englisch"}
-
 
 def schnell_aufgabe_erstellen(fach, thema):
     """Schnelles Erstellen einer Aufgabe via Terminal"""
@@ -27,6 +24,10 @@ def aufgabe_entfernen():
     """Entfernen einer bestehenden Aufgabe"""
     fach = raw_input("Welches Fach: ")
     del AUFGABEN[abkz_expand(fach)]
+
+
+ABKUERZUNG_ZU_FACH = {"D": "Deutsch", "Ma": "Mathematik",
+                      "Ru": "Russisch", "Eng": "Englisch"}
 
 
 def abkz_expand(fach):
@@ -60,11 +61,13 @@ def ausgabe_der_aufgaben():
 
 
 def programm_beenden():
+    """Beenden des Programmes"""
     print "Danke, dass du dieses Programm genutzt hast!"
     exit()
 
 
 def programm_steuern(menue):
+    """Steuerung des Programme ueber ein Menue"""
     while True:
         print "=== Aufgabenverwaltung ==="
         for index, item in enumerate(menue, 1):
@@ -104,6 +107,7 @@ with open("aufgaben.txt") as aufgaben_datei:
 
 # Was noch fehlt/zu tun ist
 # ======
+# Datei wird nicht gespeichert
 # Excpet in datum_auswerten praezisieren
 # Schnellaufgabe funktioniert nicht
 # Sortieren nach noch verbleibender Zeit + Note
