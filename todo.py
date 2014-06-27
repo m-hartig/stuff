@@ -9,7 +9,7 @@ try:
     with open("aufgaben.txt") as aufgaben_datei:
         AUFGABEN = load(aufgaben_datei)
 
-except FileNotFoundError:
+except:
     # Wenn die Datei leer ist ...
     with open("aufgaben.txt", "w") as aufgaben_datei:
         # ... soll ein leeres Dict eingefuegt werden
@@ -75,7 +75,6 @@ def ausgabe_der_aufgaben():
 def hauptmenue_ausgeben(menue):
     while True:
         print "=== Aufgabenverwaltung ==="
-
         for index, item in enumerate(menue, 1):
             print "{}  {}".format(index, item[0])
         auswahl = input("> ") - 1
@@ -94,7 +93,6 @@ def programm_beenden():
 
 def main():
     """Hauptfunktion"""
-
     menue = [
         ["Alle Aufgaben anzeigen", ausgabe_der_aufgaben],
         ["Neue Aufgabe anlegen", neue_aufgabe],
@@ -121,5 +119,6 @@ if __name__ == '__main__':
 
 # Was noch fehlt/zu tun ist
 # ======
+# FileError stimmt nicht
 # Schnellaufgabe funktioniert nicht
 # Sortieren nach noch verbleibender Zeit + Note
