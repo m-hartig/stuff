@@ -5,7 +5,11 @@ from sys import argv
 ABKUERZUNG_ZU_FACH = {"D": "Deutsch", "Ma": "Mathematik",
                       "Ru": "Russisch", "Eng": "Englisch"}
 
-AUFGABEN = load(open("aufgaben.txt"))
+try:
+    AUFGABEN = load(open("aufgaben.txt"))
+except:
+    dump(dict(), open("aufgaben.txt", "w"))
+    AUFGABEN = load(open("aufgaben.txt"))
 
 
 def schnell_aufgabe_erstellen(datum, fach, thema):
@@ -42,7 +46,7 @@ def datum_auswerten(datum):
         # Internationales Datum
         jahr, monat, tag = map(int, datum.split("-"))
 
-    return datetime(jahr, monat, tag)
+    return datetime.date(jahr, monat, tag)
 
 
 def countdown_berechnen(datum):
@@ -94,6 +98,4 @@ if __name__ == '__main__':
 
 # Was noch fehlt
 # ======
-# Verhalten, wenn Datei leer
-# with Statement
 # Sortieren nach noch verbleibender Zeit + Note
