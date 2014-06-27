@@ -8,10 +8,10 @@ ABKUERZUNG_ZU_FACH = {"D": "Deutsch", "Ma": "Mathematik",
 try:
     with open("aufgaben.txt") as aufgaben_datei:
         AUFGABEN = load(aufgaben_datei)
-except:
+except FileNotFoundError:
     # Wenn die Datei leer ist ...
     with open("aufgaben.txt", "w") as aufgaben_datei:
-        # ... soll ein leeres Dict eingefuegt werden
+        # ... soll ein leeres Dict in eine neue Datei eingefuegt werden
         dump(dict(), aufgaben_datei)
         AUFGABEN = load(aufgaben_datei)
 
