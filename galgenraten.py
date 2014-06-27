@@ -1,49 +1,49 @@
 
 def eingabe_auswerten(eingabe, aufgabe, lg):
-    """Auswerten der Eingabe"""
+    """Einsetzen der Eingabe in die Loesung"""
     for x in range(0, len(aufgabe)):
+        # Wenn die Eingabe ein Buchstabe der Lsg ist ...
         if eingabe == aufgabe[x]:
+            # ... wird an der entsprechenden Position die Eingabe eingesetzt
             lg[x] = eingabe
-
     return lg
 
 
 def eingabe_pruefen(eingabe):
-    """Eingabe ueberpruefen"""
+    """Pruefen der Eingabe auf Laenge und Zeichen"""
     if len(eingabe) > 1 or len(eingabe) == 0 or ord(eingabe) < 65 or ord(eingabe) > 122:
-        return True
-
+            return True
     return False
 
 
 def frage_stellen():
-    """Zufaelliges gesuchtes Wort finden"""
+    """Eine zufaellige Aufgabe stellen"""
     from random import choice
     aufgaben = ["SCANNER", "MAUS", "TASTATUR", "MAC", "LINUX"]
     return choice(aufgaben)
 
 
 def main():
-    """Hauptunktion"""
+    """Hauptfunktion"""
     aufgabe = list(frage_stellen())
     lg = ["_"] * len(aufgabe)
 
-    print lg
+    print " ".join(lg)
 
+    # Der Spieler hat 10 Versuche
     for x in range(0, 11):
-        eingabe = raw_input("Buchstaben eingeben: ")
+        eingabe = raw_input("> ")
 
+        # Solange die Eingabe ungueltig ist
         while eingabe_pruefen(eingabe):
             print "Eingabe ungueltig"
             eingabe = raw_input("Buchstaben eingeben: ")
 
-        eingabe = eingabe.upper()
-
-        lg = eingabe_auswerten(eingabe, aufgabe, lg)
-        print lg
+        lg = eingabe_auswerten(eingabe.upper(), aufgabe, lg)
+        print "\n", " ".join(lg)
 
         if lg == aufgabe:
-            print "Gewonnen!"
+            print "\nGewonnen!"
             break
 
     else:
