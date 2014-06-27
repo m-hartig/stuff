@@ -6,12 +6,12 @@ ABKUERZUNG_ZU_FACH = {"D": "Deutsch", "Ma": "Mathematik",
                       "Ru": "Russisch", "Eng": "Englisch"}
 
 try:
-    with open("aufgaben.txt") as aufgaben:
-        AUFGABEN = load(aufgaben)
+    with open("aufgaben.txt") as aufgaben_datei:
+        AUFGABEN = load(aufgaben_datei)
 except:
-    dump(dict(), open("aufgaben.txt", "w"))
-    with open("aufgaben.txt") as aufgaben:
-        AUFGABEN = load(aufgaben)
+    with open("aufgaben.txt", "w") as aufgaben_datei:
+        dump(dict(), aufgaben_datei)
+        AUFGABEN = load(aufgaben_datei)
 
 
 def schnell_aufgabe_erstellen(datum, fach, thema):
@@ -91,8 +91,6 @@ def main():
 
             else:
                 break
-
-    AUFGABEN.close()
 
 
 if __name__ == '__main__':
