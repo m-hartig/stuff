@@ -1,5 +1,6 @@
 
 def eingabe_auswerten(eingabe, aufgabe, lg):
+    """Auswerten der Eingabe"""
     for x in range(0, len(aufgabe)):
         if eingabe == aufgabe[x]:
             lg[x] = eingabe
@@ -8,6 +9,7 @@ def eingabe_auswerten(eingabe, aufgabe, lg):
 
 
 def eingabe_pruefen(eingabe):
+    """Eingabe ueberpruefen"""
     if len(eingabe) > 1 or len(eingabe) == 0 or ord(eingabe) < 65 or ord(eingabe) > 122:
         return True
 
@@ -15,12 +17,14 @@ def eingabe_pruefen(eingabe):
 
 
 def frage_stellen():
+    """Zufaelliges gesuchtes Wort finden"""
     from random import choice
     aufgaben = ["SCANNER", "MAUS", "TASTATUR", "MAC", "LINUX"]
     return choice(aufgaben)
 
 
 def main():
+    """Hauptunktion"""
     aufgabe = list(frage_stellen())
     lg = ["_"] * len(aufgabe)
 
