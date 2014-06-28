@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from json import load, dump
-from sys import argv, exit
+from sys import argv
 
 
 def schnell_aufgabe_erstellen(fach, thema):
@@ -116,6 +116,8 @@ with open("aufgaben.txt", "w") as aufgaben_datei:
 # Was noch fehlt/zu tun ist
 # ======
 # Datei wird nicht gespeichert
+# Datumseingabe, MenueEingabe ueberpruefen lassen
+# Programm-Beenden ueberarbeiten
 # Excpet in datum_auswerten praezisieren
 # Schnellaufgabe funktioniert nicht
 # Sortieren nach noch verbleibender Zeit + Note
