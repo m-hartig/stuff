@@ -7,18 +7,18 @@ p3
 aS'BLF'
 p4
 aI01
-asS'Mathematik'
+asS'Deutsch'
 p5
 (lp6
-S'2014-06-30 00:00:00'
+S'2014-06-29 00:00:00'
 p7
 aS'BLF'
 p8
 aI01
-asS'Deutsch'
+asS'Mathematik'
 p9
 (lp10
-S'2014-06-29 00:00:00'
+S'2014-06-30 00:00:00'
 p11
 aS'BLF'
 p12

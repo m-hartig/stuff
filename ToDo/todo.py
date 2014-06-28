@@ -24,7 +24,7 @@ def datum_auswerten(datum):
 
 
 def schnell_aufgabe_erstellen(fach, thema):
-    """Schnelles Erstellen einer Aufgabe via Terminal"""
+    """Schnelles Erstellen einer Aufgabe via Terminal: python todo.py Ph LK"""
     aufgaben[abkz_expand(fach)] = [
         # Termin morgen, da eigentlicher Termin unbekannt
         str(datetime.today() + timedelta(days=1)),
@@ -39,6 +39,7 @@ def schnell_aufgabe_erstellen(fach, thema):
 def aufgabe_entfernen():
     """Entfernen einer bestehenden Aufgabe"""
     fach = raw_input("Welches Fach: ")
+
     if fach not in aufgaben:
         print "Keine Aufgabe in diesem Fach"
         return
@@ -83,8 +84,8 @@ def programm_steuern(menue):
         auswahl = int(raw_input("> ")) - 1
 
         if auswahl == 3:
-            print programm_beenden()
-            break
+            if programm_beenden():
+                break
         elif 0 <= auswahl < len(menue):
             menue[auswahl][1]()
         else:
@@ -93,7 +94,9 @@ def programm_steuern(menue):
 
 def programm_beenden():
     """"Ausgabe bei Beenden der While-Schleife"""
-    return "Programm wurde beendet."
+    if raw_input("Wollen Sie das Programm wirklich beenden? ") == "ja":
+        return True
+    return False
 
 
 def datei_laden():
