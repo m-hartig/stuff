@@ -6,7 +6,13 @@ from sys import argv, exit
 def schnell_aufgabe_erstellen(fach, thema):
     """Schnelles Erstellen einer Aufgabe via Terminal"""
     AUFGABEN[abkz_expand(fach)] = [
-        str(datetime.today() + timedelta(days=1)), thema, False]
+        # Termin morgen, da eigentlicher Termin unbekannt
+        str(datetime.today() + timedelta(days=1)),
+        # Thema wird uebergeben
+        thema,
+        # Keine Benotung, da schnelle Aufgabe meist ohne Note
+        False
+    ]
     print "Aufgabe wurde erstellt."
 
 
@@ -23,16 +29,17 @@ def neue_aufgabe():
 def aufgabe_entfernen():
     """Entfernen einer bestehenden Aufgabe"""
     fach = raw_input("Welches Fach: ")
-    del AUFGABEN[abkz_expand(fach)]
-
-
-ABKUERZUNG_ZU_FACH = {"D": "Deutsch", "Ma": "Mathematik",
-                      "Ru": "Russisch", "Eng": "Englisch"}
+    if raw_input("Sind Sie sich sicher? ") == "ja":
+        del AUFGABEN[abkz_expand(fach)]
+    else:
+        return
 
 
 def abkz_expand(fach):
     """Zuordnung der Abkuerzungen zu den Faechern"""
-    return ABKUERZUNG_ZU_FACH.get(fach, fach)
+    abkuerzung_zu_fach = {"D": "Deutsch", "Ma": "Mathematik",
+                          "Ru": "Russisch", "Eng": "Englisch"}
+    return abkuerzung_zu_fach.get(fach, fach)
 
 
 def datum_auswerten(datum):
@@ -66,7 +73,7 @@ def programm_beenden():
 
 
 def programm_steuern(menue):
-    """Steuerung des Programme ueber ein Menue"""
+    """Steuerung des Programmes ueber ein Menue"""
     while True:
         print "=== Aufgabenverwaltung ==="
         for index, item in enumerate(menue, 1):
@@ -98,6 +105,7 @@ with open("aufgaben.txt", "w") as aufgaben_datei:
         AUFGABEN = dict()
 
     if argv[1:]:
+        # Wenn Paramter uebergeben wurden
         script, fach, thema = argv
         schnell_aufgabe_erstellen(fach, thema)
         dump(AUFGABEN, aufgaben_datei, "w")
