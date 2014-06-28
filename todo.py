@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from json import load, dump
+import pickle
 from sys import argv
 
 
@@ -90,6 +90,19 @@ def programm_steuern(menue):
             print "Nur Zahlen im Bereich 1 - {} eingeben".format(len(menue))
 
 
+def datei_laden():
+    """Dictionary aus Datei wird geladen"""
+    datei = open("aufgaben.txt")
+    aufgaben = pickle.load(datei)
+    return aufgaben
+
+
+def in_datei_schreiben(daten):
+    """Dictionary wird in Datei gespeichert"""
+    datei = open("aufgaben.txt", "w")
+    pickle.dump(daten, datei)
+    datei.close()
+
 menue = [
     ["Alle Aufgaben anzeigen", ausgabe_der_aufgaben],
     ["Neue Aufgabe anlegen", neue_aufgabe],
@@ -97,25 +110,23 @@ menue = [
     ["Programm beenden", programm_beenden]
 ]
 
-with open("aufgaben.txt", "w") as aufgaben_datei:
-    try:
-        aufgaben = load(aufgaben_datei)
-    except IOError:
-        aufgaben = dict()
+try:
+    aufgaben = datei_laden()
+except IOError:
+    in_datei_schreiben(dict())
+    aufgaben = datei_laden()
 
-    if argv[1:]:
-        # Wenn Paramter uebergeben wurden
-        script, fach, thema = argv
-        schnell_aufgabe_erstellen(fach, thema)
-        dump(aufgaben, aufgaben_datei, "w")
-    else:
-        programm_steuern(menue)
-        dump(aufgaben, aufgaben_datei)
+if argv[1:]:
+    script, fach, thema = argv
+    schnell_aufgabe_erstellen(fach, thema)
+    dump(aufgaben, aufgaben_datei, "w")
+else:
+    programm_steuern(menue)
+    in_datei_schreiben(aufgaben)
 
 
 # Was noch fehlt/zu tun ist
 # ======
-# Datei wird nicht gespeichert
 # Datumseingabe, MenueEingabe ueberpruefen lassen
 # Programm-Beenden ueberarbeiten
 # Excpet in datum_auswerten praezisieren
