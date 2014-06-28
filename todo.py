@@ -37,7 +37,9 @@ def aufgabe_entfernen():
 def abkz_expand(fach):
     """Zuordnung der Abkuerzungen zu den Faechern"""
     abkuerzung_zu_fach = {"D": "Deutsch", "Ma": "Mathematik",
-                          "Ru": "Russisch", "Eng": "Englisch"}
+                          "Ru": "Russisch", "Eng": "Englisch",
+                          "Info": "Informatik", "Ph": "Physik",
+                          "Bio": "Biologie", "Ch": "Chemie"}
     return abkuerzung_zu_fach.get(fach, fach)
 
 
@@ -101,12 +103,6 @@ def in_datei_schreiben(daten):
     with open("aufgaben.txt", "w") as datei:
         pickle.dump(daten, datei)
 
-menue = [
-    ["Alle Aufgaben anzeigen", ausgabe_der_aufgaben],
-    ["Neue Aufgabe anlegen", neue_aufgabe],
-    ["Aufgabe entfernen", aufgabe_entfernen],
-    ["Programm beenden", programm_beenden]
-]
 
 try:
     aufgaben = datei_laden()
@@ -114,16 +110,29 @@ except IOError:
     in_datei_schreiben(dict())
     aufgaben = datei_laden()
 
-if argv[1:]:
-    script, fach, thema = argv
-    schnell_aufgabe_erstellen(fach, thema)
-else:
-    programm_steuern(menue)
 
-in_datei_schreiben(aufgaben)
+def main():
+    """Hauptfunktion"""
+    menue = [
+        ["Alle Aufgaben anzeigen", ausgabe_der_aufgaben],
+        ["Neue Aufgabe anlegen", neue_aufgabe],
+        ["Aufgabe entfernen", aufgabe_entfernen],
+        ["Programm beenden", programm_beenden]
+    ]
+
+    if argv[1:]:
+        script, fach, thema = argv
+        schnell_aufgabe_erstellen(fach, thema)
+    else:
+        programm_steuern(menue)
+
+    in_datei_schreiben(aufgaben)
+
+if __name__ == '__main__':
+    main()
 
 # Was noch fehlt/zu tun ist
 # ======
 # Datumseingabe, MenueEingabe ueberpruefen lassen
-# Excpet in datum_auswerten praezisieren
-# Sortieren nach noch verbleibender Zeit + Note
+# kein 00:00:00 mehr, nur Datum (keine Zeit)
+# Sortieren nach noch verbleibender Zeit oder Note
