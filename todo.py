@@ -8,7 +8,6 @@ def schnell_aufgabe_erstellen(fach, thema):
     AUFGABEN[abkz_expand(fach)] = [
         # Termin morgen, da eigentlicher Termin unbekannt
         str(datetime.today() + timedelta(days=1)),
-        # Thema wird uebergeben
         thema,
         # Keine Benotung, da schnelle Aufgabe meist ohne Note
         False
