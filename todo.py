@@ -1,6 +1,26 @@
 from datetime import datetime, timedelta
-import pickle
+from pickle import load, dump
 from sys import argv
+
+
+def neue_aufgabe():
+    """Eingabe einer neuen Aufgabe"""
+    fach = raw_input("Fach: ")
+    datum = raw_input("Datum: ")
+    thema = raw_input("Thema: ")
+    note = bool(raw_input("Note? "))
+
+    aufgaben[abkz_expand(fach)] = [str(datum_auswerten(datum)), thema, note]
+
+
+def datum_auswerten(datum):
+    """Datum wird zur Weiterverabeitung bearbeitet"""
+    try:
+        tag, monat, jahr = map(int, datum.split("."))
+    except ValueError:
+        jahr, monat, tag = map(int, datum.split("-"))
+
+    return datetime(jahr, monat, tag)
 
 
 def schnell_aufgabe_erstellen(fach, thema):
@@ -13,16 +33,6 @@ def schnell_aufgabe_erstellen(fach, thema):
         False
     ]
     print "Aufgabe wurde erstellt."
-
-
-def neue_aufgabe():
-    """Eingabe einer neuen Aufgabe"""
-    fach = raw_input("Fach: ")
-    datum = raw_input("Datum: ")
-    thema = raw_input("Thema: ")
-    note = bool(raw_input("Note? "))
-
-    aufgaben[abkz_expand(fach)] = [str(datum_auswerten(datum)), thema, note]
 
 
 def aufgabe_entfernen():
@@ -43,24 +53,9 @@ def abkz_expand(fach):
     return abkuerzung_zu_fach.get(fach, fach)
 
 
-def datum_auswerten(datum):
-    """Datum wird zur Weiterverabeitung bearbeitet"""
-    try:
-        tag, monat, jahr = map(int, datum.split("."))
-    except ValueError:
-        jahr, monat, tag = map(int, datum.split("-"))
-
-    return datetime(jahr, monat, tag)
-
-
-def countdown_berechnen(datum):
-    """Berechnen der noch verbleibenden Zeit"""
-    # Addieren mit 1, da heutiger Tag mitgerechnet werden soll
-    return (datum_auswerten(datum) - datetime.now()).days + 1
-
-
 def ausgabe_der_aufgaben():
     """Ausgabe aller Aufgaben"""
+    print
     for key, value in sorted(aufgaben.iteritems()):
         print "%s - noch %d Tag(e)" % (key, countdown_berechnen(value[0][:10]))
         for eintrag in value:
@@ -68,9 +63,10 @@ def ausgabe_der_aufgaben():
         print
 
 
-def programm_beenden():
-    """"Ausgabe bei Beenden der While-Schleife"""
-    return "Programm wurde beendet."
+def countdown_berechnen(datum):
+    """Berechnen der noch verbleibenden Zeit"""
+    # Addieren mit 1, da heutiger Tag mitgerechnet werden soll
+    return (datum_auswerten(datum) - datetime.now()).days + 1
 
 
 def programm_steuern(menue):
@@ -91,17 +87,22 @@ def programm_steuern(menue):
             print "Nur Zahlen im Bereich 1 - {} eingeben".format(len(menue))
 
 
+def programm_beenden():
+    """"Ausgabe bei Beenden der While-Schleife"""
+    return "Programm wurde beendet."
+
+
 def datei_laden():
     """Dictionary aus Datei wird geladen"""
     with open("aufgaben.txt") as datei:
-        aufgaben = pickle.load(datei)
+        aufgaben = load(datei)
     return aufgaben
 
 
 def in_datei_schreiben(daten):
     """Dictionary wird in Datei gespeichert"""
     with open("aufgaben.txt", "w") as datei:
-        pickle.dump(daten, datei)
+        dump(daten, datei)
 
 
 try:
@@ -135,4 +136,3 @@ if __name__ == '__main__':
 # ======
 # Datumseingabe, MenueEingabe ueberpruefen lassen
 # kein 00:00:00 mehr, nur Datum (keine Zeit)
-# Sortieren nach noch verbleibender Zeit oder Note
