@@ -9,13 +9,17 @@ class Abfrager(object):
     def __init__(self):
         self.fenster = Tk()
 
+        # Aufgabe anzeigen
         self.aufgabe = Label(
             self.fenster, font=("Comic Sans MS", 20), width=20)
         self.neue_aufgabe()
 
+        # Antwort erwarten
         self.antwort = Entry(self.fenster)
         self.antworten = Button(
             self.fenster, text="Antworten", command=self.antwort_auswerten)
+
+        # Antwort auswerten
         self.auswertung = Label(
             self.fenster, text="Antwort eingeben ...", font=("Comic Sans MS", 15), fg="grey")
 
