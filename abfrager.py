@@ -4,7 +4,7 @@ from random import randint
 
 class Abfrager(object):
 
-    """Klasse dient als Abfrager fuer Malfolgen im Bereich 10 * 10"""
+    """Klasse dient zum Ueben der Malfolgen im Bereich 10 * 10"""
 
     def __init__(self):
         self.fenster = Tk()
@@ -16,7 +16,8 @@ class Abfrager(object):
         self.antwort = Entry(self.fenster)
         self.antworten = Button(
             self.fenster, text="Antworten", command=self.antwort_auswerten)
-        self.auswertung = Label(self.fenster, font=("Comic Sans MS", 15))
+        self.auswertung = Label(
+            self.fenster, text="Antwort eingeben ...", font=("Comic Sans MS", 15), fg="grey")
 
         self.aufgabe.pack()
         self.antwort.pack()
