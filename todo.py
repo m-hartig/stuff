@@ -5,7 +5,7 @@ from sys import argv
 
 def schnell_aufgabe_erstellen(fach, thema):
     """Schnelles Erstellen einer Aufgabe via Terminal"""
-    AUFGABEN[abkz_expand(fach)] = [
+    aufgaben[abkz_expand(fach)] = [
         # Termin morgen, da eigentlicher Termin unbekannt
         str(datetime.today() + timedelta(days=1)),
         thema,
@@ -22,14 +22,14 @@ def neue_aufgabe():
     thema = raw_input("Thema: ")
     note = bool(raw_input("Note? "))
 
-    AUFGABEN[abkz_expand(fach)] = [str(datum_auswerten(datum)), thema, note]
+    aufgaben[abkz_expand(fach)] = [str(datum_auswerten(datum)), thema, note]
 
 
 def aufgabe_entfernen():
     """Entfernen einer bestehenden Aufgabe"""
     fach = raw_input("Welches Fach: ")
     if raw_input("Sind Sie sich sicher? ") == "ja":
-        del AUFGABEN[abkz_expand(fach)]
+        del aufgaben[abkz_expand(fach)]
     else:
         return
 
@@ -59,7 +59,7 @@ def countdown_berechnen(datum):
 
 def ausgabe_der_aufgaben():
     """Ausgabe aller Aufgaben"""
-    for key, value in sorted(AUFGABEN.iteritems()):
+    for key, value in sorted(aufgaben.iteritems()):
         print "%s - noch %d Tag(e)" % (key, countdown_berechnen(value[0][:10]))
         for eintrag in value:
             print eintrag
@@ -99,18 +99,18 @@ menue = [
 
 with open("aufgaben.txt", "w") as aufgaben_datei:
     try:
-        AUFGABEN = load(aufgaben_datei)
-    except:
-        AUFGABEN = dict()
+        aufgaben = load(aufgaben_datei)
+    except IOError:
+        aufgaben = dict()
 
     if argv[1:]:
         # Wenn Paramter uebergeben wurden
         script, fach, thema = argv
         schnell_aufgabe_erstellen(fach, thema)
-        dump(AUFGABEN, aufgaben_datei, "w")
+        dump(aufgaben, aufgaben_datei, "w")
     else:
         programm_steuern(menue)
-        dump(AUFGABEN, aufgaben_datei)
+        dump(aufgaben, aufgaben_datei)
 
 
 # Was noch fehlt/zu tun ist
