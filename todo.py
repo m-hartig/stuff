@@ -68,7 +68,7 @@ def ausgabe_der_aufgaben():
 
 def programm_beenden():
     """"Ausgabe bei Beenden der While-Schleife"""
-    return "Programm wurde beendet"
+    return "Programm wurde beendet."
 
 
 def programm_steuern(menue):
