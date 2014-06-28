@@ -28,6 +28,7 @@ def schnell_aufgabe_erstellen(fach, thema):
     aufgaben[abkz_expand(fach)] = [
         # Termin morgen, da eigentlicher Termin unbekannt
         str(datetime.today() + timedelta(days=1)),
+        # Beschreibung der Aufgabe in einem Wort
         thema,
         # Keine Benotung, da schnelle Aufgabe meist ohne Note
         False
@@ -38,7 +39,10 @@ def schnell_aufgabe_erstellen(fach, thema):
 def aufgabe_entfernen():
     """Entfernen einer bestehenden Aufgabe"""
     fach = raw_input("Welches Fach: ")
-    if raw_input("Sind Sie sich sicher? ") == "ja":
+    if fach not in aufgaben:
+        print "Keine Aufgabe in diesem Fach"
+        return
+    elif raw_input("Sind Sie sich sicher? ") == "ja":
         del aufgaben[abkz_expand(fach)]
     else:
         return
@@ -46,10 +50,10 @@ def aufgabe_entfernen():
 
 def abkz_expand(fach):
     """Zuordnung der Abkuerzungen zu den Faechern"""
-    abkuerzung_zu_fach = {"D": "Deutsch", "Ma": "Mathematik",
-                          "Ru": "Russisch", "Eng": "Englisch",
-                          "Info": "Informatik", "Ph": "Physik",
-                          "Bio": "Biologie", "Ch": "Chemie"}
+    abkuerzung_zu_fach = {"d": "Deutsch", "Ma": "Mathematik",
+                          "ru": "Russisch", "Eng": "Englisch",
+                          "info": "Informatik", "Ph": "Physik",
+                          "bio": "Biologie", "Ch": "Chemie"}
     return abkuerzung_zu_fach.get(fach, fach)
 
 
@@ -108,6 +112,7 @@ def in_datei_schreiben(daten):
 try:
     aufgaben = datei_laden()
 except IOError:
+    # Wenn die Datei leer ist, soll sie mit einem Dictionary gefuellt werden
     in_datei_schreiben(dict())
     aufgaben = datei_laden()
 
@@ -131,8 +136,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# Was noch fehlt/zu tun ist
-# =========================
-# Datumseingabe, MenueEingabe ueberpruefen lassen
-# kein 00:00:00 mehr, nur Datum (keine Zeit)

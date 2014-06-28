@@ -1,16 +1,16 @@
 (dp0
-S'Info'
+S'Englisch'
 p1
 (lp2
-S'2014-06-29 13:57:52.034671'
+S'2014-06-29 00:00:00'
 p3
-aS'OOP'
+aS'BLF'
 p4
-aI00
-asS'Englisch'
+aI01
+asS'Mathematik'
 p5
 (lp6
-S'2014-06-29 00:00:00'
+S'2014-06-30 00:00:00'
 p7
 aS'BLF'
 p8
@@ -22,13 +22,5 @@ S'2014-06-29 00:00:00'
 p11
 aS'BLF'
 p12
-aI01
-asS'Mathematik'
-p13
-(lp14
-S'2014-06-30 00:00:00'
-p15
-aS'BLF'
-p16
 aI01
 as.
