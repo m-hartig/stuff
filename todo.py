@@ -45,7 +45,7 @@ def datum_auswerten(datum):
     """Datum wird zur Weiterverabeitung bearbeitet"""
     try:
         tag, monat, jahr = map(int, datum.split("."))
-    except:
+    except ValueError:
         jahr, monat, tag = map(int, datum.split("-"))
 
     return datetime(jahr, monat, tag)
@@ -91,16 +91,15 @@ def programm_steuern(menue):
 
 def datei_laden():
     """Dictionary aus Datei wird geladen"""
-    datei = open("aufgaben.txt")
-    aufgaben = pickle.load(datei)
+    with open("aufgaben.txt") as datei:
+        aufgaben = pickle.load(datei)
     return aufgaben
 
 
 def in_datei_schreiben(daten):
     """Dictionary wird in Datei gespeichert"""
-    datei = open("aufgaben.txt", "w")
-    pickle.dump(daten, datei)
-    datei.close()
+    with open("aufgaben.txt", "w") as datei:
+        pickle.dump(daten, datei)
 
 menue = [
     ["Alle Aufgaben anzeigen", ausgabe_der_aufgaben],
@@ -127,5 +126,4 @@ in_datei_schreiben(aufgaben)
 # ======
 # Datumseingabe, MenueEingabe ueberpruefen lassen
 # Excpet in datum_auswerten praezisieren
-# Schnellaufgabe funktioniert nicht
 # Sortieren nach noch verbleibender Zeit + Note
