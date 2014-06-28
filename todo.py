@@ -119,16 +119,15 @@ except IOError:
 if argv[1:]:
     script, fach, thema = argv
     schnell_aufgabe_erstellen(fach, thema)
-    dump(aufgaben, aufgaben_datei, "w")
 else:
     programm_steuern(menue)
-    in_datei_schreiben(aufgaben)
 
+in_datei_schreiben(aufgaben)
 
 # Was noch fehlt/zu tun ist
 # ======
-# Datumseingabe, MenueEingabe ueberpruefen lassen
 # Programm-Beenden ueberarbeiten
+# Datumseingabe, MenueEingabe ueberpruefen lassen
 # Excpet in datum_auswerten praezisieren
 # Schnellaufgabe funktioniert nicht
 # Sortieren nach noch verbleibender Zeit + Note
