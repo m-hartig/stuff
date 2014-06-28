@@ -67,8 +67,8 @@ def ausgabe_der_aufgaben():
 
 
 def programm_beenden():
-    """Beenden des Programmes"""
-    print "Danke, dass du dieses Programm genutzt hast!"
+    """"Ausgabe bei Beenden der While-Schleife"""
+    return "Programm wurde beendet"
 
 
 def programm_steuern(menue):
@@ -78,13 +78,12 @@ def programm_steuern(menue):
         for index, item in enumerate(menue, 1):
             print "{}  {}".format(index, item[0])
 
-        auswahl = raw_input("> ")
-        if "end" in auswahl:
-            break
+        auswahl = int(raw_input("> ")) - 1
 
-        print
-        auswahl = int(auswahl) - 1
-        if 0 <= auswahl < len(menue):
+        if auswahl == 3:
+            print programm_beenden()
+            break
+        elif 0 <= auswahl < len(menue):
             menue[auswahl][1]()
         else:
             print "Nur Zahlen im Bereich 1 - {} eingeben".format(len(menue))
@@ -126,7 +125,6 @@ in_datei_schreiben(aufgaben)
 
 # Was noch fehlt/zu tun ist
 # ======
-# Programm-Beenden ueberarbeiten
 # Datumseingabe, MenueEingabe ueberpruefen lassen
 # Excpet in datum_auswerten praezisieren
 # Schnellaufgabe funktioniert nicht
