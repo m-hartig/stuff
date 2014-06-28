@@ -133,6 +133,6 @@ if __name__ == '__main__':
     main()
 
 # Was noch fehlt/zu tun ist
-# ======
+# =========================
 # Datumseingabe, MenueEingabe ueberpruefen lassen
 # kein 00:00:00 mehr, nur Datum (keine Zeit)
